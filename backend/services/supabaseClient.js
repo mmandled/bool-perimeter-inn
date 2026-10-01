@@ -1,0 +1,17 @@
+const { createClient } = require("@supabase/supabase-js");
+
+let client = null;
+
+function isSupabaseConfigured() {
+  return Boolean(process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY);
+}
+
+function getSupabase() {
+  if (!isSupabaseConfigured()) return null;
+  if (!client) {
+    client = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
+  }
+  return client;
+}
+
+module.exports = { getSupabase, isSupabaseConfigured };
